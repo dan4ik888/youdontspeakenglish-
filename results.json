@@ -1,0 +1,162 @@
+[
+ {
+  "name": "Версия Android эмулятора",
+  "ok": true,
+  "detail": "Android 14 / API 34"
+ },
+ {
+  "name": "APK устанавливается",
+  "ok": true,
+  "detail": "Performing Streamed Install\nSuccess"
+ },
+ {
+  "name": "Приложение запускается",
+  "ok": true,
+  "detail": "cmp=kz.magistratura.english/.MainActivity } Status: ok LaunchState: COLD Activity: kz.magistratura.english/.MainActivity TotalTime: 4285 WaitTime: 4326 Complete"
+ },
+ {
+  "name": "Подключение к WebView",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "Главный экран загрузился",
+  "ok": true,
+  "detail": "через 15.8 c (эмулятор без GPU)"
+ },
+ {
+  "name": "Процесс жив",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "Приложение в WebView: 201 задание, 16 тем, 6 вкладок",
+  "ok": true,
+  "detail": "{\"q\":201,\"topics\":16,\"tabs\":6,\"hero\":\"Готовимся к КТ по английскому\",\"ls\":true,\"w\":412,\"h\":842,\"dpr\":2.625,\"overflow\":0,\"bridge\":\"object\",\"ua\":\"Chrome/113.0.5672.136\"}"
+ },
+ {
+  "name": "localStorage работает (прогресс будет сохраняться)",
+  "ok": true,
+  "detail": "True"
+ },
+ {
+  "name": "Мост приложения для цвета системных полос подключён",
+  "ok": true,
+  "detail": "object"
+ },
+ {
+  "name": "Нет горизонтальной прокрутки на экране телефона",
+  "ok": true,
+  "detail": "экран 412x842 css px"
+ },
+ {
+  "name": "Тап по экрану доходит до приложения (калибровка тачскрина)",
+  "ok": true,
+  "detail": "WebView начинается с (2, 129) px, тап попал в [205, 408]"
+ },
+ {
+  "name": "Тап по вкладке «Темы»",
+  "ok": true,
+  "detail": "#topics"
+ },
+ {
+  "name": "Тап по теме: теория открылась",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "У темы 2 кнопки видео",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "Тап по неверному варианту: красный + зелёный + объяснение",
+  "ok": true,
+  "detail": "{\"show\":true,\"correct\":1,\"wrong\":1,\"streak\":\"1\"}"
+ },
+ {
+  "name": "Серия дней в шапке обновилась сразу",
+  "ok": true,
+  "detail": "1"
+ },
+ {
+  "name": "Тап «‹ назад» из тренировки возвращает к теме",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "Кнопка «Назад» Android: прошлый экран, а не выход",
+  "ok": true,
+  "detail": "hash=#topics"
+ },
+ {
+  "name": "Тап «Начать экзамен»",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "Экзамен 50 вопросов: 50/50 и «порог пройден»",
+  "ok": true,
+  "detail": "50/50 | Порог пройден (≥25)"
+ },
+ {
+  "name": "Тап «Готово» после экзамена",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "Словарь: карточка переворачивается по тапу",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "После закрытия и запуска приложения прогресс на месте",
+  "ok": true,
+  "detail": "ответов 51 → 51, экзаменов 1"
+ },
+ {
+  "name": "Тёмная тема по тапу",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "name": "После выгрузки из памяти приложение открывается на том же экране",
+  "ok": true,
+  "detail": "процесс был выгружен: True, экран: #topics/cond"
+ },
+ {
+  "name": "Тап по видео: приложение не открывает YouTube внутри себя",
+  "ok": true,
+  "detail": "href=file:///android_asset/index.html#topics/present"
+ },
+ {
+  "name": "Видео открылось во внешнем приложении (YouTube/браузер)",
+  "ok": true,
+  "detail": "topResumedActivity=ActivityRecord{509e3ad u0 com.android.chrome/org.chromium.chrome.browser.firstrun.FirstRunActivity t11} | есть: ['com.android.chrome', 'com.google.android.youtube']"
+ },
+ {
+  "name": "Вернулся из видео — та же тема на экране",
+  "ok": true,
+  "detail": "экран: #topics/present, Android выгружал приложение: False"
+ },
+ {
+  "name": "Тапы выполнены",
+  "ok": true,
+  "detail": "системный тачскрин: 10, через DevTools: 0"
+ },
+ {
+  "name": "Нет JavaScript-ошибок в консоли WebView",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "name": "Нет падений приложения (FATAL EXCEPTION)",
+  "ok": true,
+  "detail": "[]"
+ },
+ {
+  "name": "Нет зависаний «Приложение не отвечает» (ANR)",
+  "ok": true,
+  "detail": "[]"
+ }
+]
