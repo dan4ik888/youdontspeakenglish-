@@ -194,11 +194,13 @@ try:
       ls:(()=>{try{localStorage.setItem('_t','1');return localStorage.getItem('_t')==='1'}catch(e){return 'ERR '+e}})(),
       w:innerWidth,h:innerHeight,dpr:devicePixelRatio,
       overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth,
+      bridge:typeof AndroidBridge,
       ua:navigator.userAgent.replace(/.*Chrome\\//,'Chrome/').split(' ')[0]})""")
     d = json.loads(info) if isinstance(info, str) else {}
     log("Приложение в WebView: 201 задание, 16 тем, 6 вкладок",
         d.get("q") == 201 and d.get("topics") == 16 and d.get("tabs") == 6, info)
     log("localStorage работает (прогресс будет сохраняться)", d.get("ls") is True, d.get("ls"))
+    log("Мост приложения для цвета системных полос подключён", d.get("bridge") == "object", d.get("bridge"))
     log("Нет горизонтальной прокрутки на экране телефона", d.get("overflow", 1) <= 0, f"экран {d.get('w')}x{d.get('h')} css px")
 
     # ---------- калибровка настоящих тапов ----------
@@ -292,6 +294,27 @@ try:
     shot("8_dark.png")
     CD.ev("document.getElementById('themeBtn').click()"); settle(0.5)
 
+    # ---------- Android выгрузил приложение из памяти -> возврат на тот же экран ----------
+    CD.ev("go('topics')"); settle(0.6)
+    CD.ev("go('topics/cond')"); settle(1.0)
+    adb("shell", "input", "keyevent", "3"); time.sleep(2.5)          # на домашний экран
+    adb("shell", "am", "kill", PKG); time.sleep(2.5)                   # как это делает система в фоне
+    was_killed = not alive()
+    CD.close()
+    adb("shell", "am", "start", "-W", "-a", "android.intent.action.MAIN",
+        "-c", "android.intent.category.LAUNCHER", "-n", ACT)            # как тап по иконке
+    CD = CDP(); CD.connect()
+    for _ in range(60):
+        if CD.ev("!!(document.querySelector('.theory')||document.querySelector('.hero'))") is True:
+            break
+        time.sleep(1)
+    h3 = CD.ev("location.hash")
+    log("После выгрузки из памяти приложение открывается на том же экране",
+        was_killed and h3 == "#topics/cond" and CD.ev("!!document.querySelector('.theory')") is True,
+        f"процесс был выгружен: {was_killed}, экран: {h3}")
+    CD.ev("window.scrollTo(0,0)")
+    shot("9_restored_after_kill.png")
+
     # ---------- видео открывается снаружи ----------
     CD.ev("go('topics')"); settle(0.6)
     CD.ev("go('topics/present')"); settle(1.0)
@@ -301,12 +324,25 @@ try:
     href = CD.ev("location.href")
     acts = adb("shell", "dumpsys", "activity", "activities")
     resumed = (re.findall(r"(?:topResumedActivity|mResumedActivity)[^\n]*", acts) or [""])[0].strip()
-    shot("9_after_video_tap.png")
-    log("Тап по видео: приложение не падает и остаётся на своей странице",
-        alive() and str(href).startswith("file:///android_asset/"), f"href={str(href)[:50]}")
+    shot("10_after_video_tap.png")
+    log("Тап по видео: приложение не открывает YouTube внутри себя",
+        str(href).startswith("file:///android_asset/"), f"href={str(href)[:50]}")
     log("Видео открылось во внешнем приложении (YouTube/браузер)",
         bool(handlers) and PKG not in resumed, f"{resumed[:150]} | есть: {handlers}")
-    adb("shell", "am", "start", "-W", "-n", ACT)
+    in_bg_killed = not alive()
+    CD.close()
+    adb("shell", "am", "start", "-W", "-a", "android.intent.action.MAIN",
+        "-c", "android.intent.category.LAUNCHER", "-n", ACT)
+    CD = CDP(); CD.connect()
+    for _ in range(60):
+        if CD.ev("!!(document.querySelector('.theory')||document.querySelector('.hero'))") is True:
+            break
+        time.sleep(1)
+    h4 = CD.ev("location.hash")
+    log("Вернулся из видео — та же тема на экране",
+        h4 == "#topics/present" and CD.ev("!!document.querySelector('.theory')") is True,
+        f"экран: {h4}, Android выгружал приложение: {in_bg_killed}")
+    shot("11_back_from_video.png")
 
 except Exception as e:
     import traceback
