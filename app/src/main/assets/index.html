@@ -462,7 +462,7 @@ function renderHome(){
           <h2>Готовимся к КТ по английскому</h2>
           <p>Блок иностранного языка — <b>50 заданий</b>, нужно набрать не менее <b>25 баллов</b>. Учи темы, тренируйся и сдавай пробный экзамен.</p>
           <div class="hero-stats">
-            <div class="hero-stat"><div class="n">${o.answered}</div><div class="l">заданий решено</div></div>
+            <div class="hero-stat"><div class="n">${o.answered}</div><div class="l">${plur(o.answered,["задание решено","задания решено","заданий решено"])}</div></div>
             <div class="hero-stat"><div class="n">${o.acc}%</div><div class="l">точность</div></div>
             <div class="hero-stat"><div class="n">${best!==null?best+"/50":"—"}</div><div class="l">лучший экзамен</div></div>
           </div>
@@ -480,7 +480,7 @@ function renderHome(){
     </div>
 
     ${S.mistakes.length?`<div class="section-label">Работа над ошибками</div>
-    <button class="act" data-go="mistakes" style="border-color:var(--accent)"><div class="ai" style="background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)"><svg viewBox="0 0 24 24" width="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 4.3 2.6 18a2 2 0 0 0 1.7 3h15.4a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0z"/></svg></div><div style="min-width:0"><div class="at">Повторить ошибки</div><div class="ad">${S.mistakes.length} заданий ждут повторения</div></div><span class="arr">›</span></button>`:""}
+    <button class="act" data-go="mistakes" style="border-color:var(--accent)"><div class="ai" style="background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)"><svg viewBox="0 0 24 24" width="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 4.3 2.6 18a2 2 0 0 0 1.7 3h15.4a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0z"/></svg></div><div style="min-width:0"><div class="at">Повторить ошибки</div><div class="ad">${S.mistakes.length} ${plur(S.mistakes.length,["задание ждёт","задания ждут","заданий ждут"])} повторения</div></div><span class="arr">›</span></button>`:""}
 
     <div class="section-label">О формате экзамена</div>
     <div class="card pad" style="font-size:14px;line-height:1.7">
@@ -819,10 +819,10 @@ function renderProgress(){
     <h1 class="page-title">Прогресс</h1>
     <p class="page-sub">Статистика по всем заданиям, темам и экзаменам.</p>
     <div class="grid auto">
-      <div class="card stat-tile"><div class="n">${o.answered}</div><div class="l">всего ответов</div></div>
+      <div class="card stat-tile"><div class="n">${o.answered}</div><div class="l">${plur(o.answered,["ответ всего","ответа всего","ответов всего"])}</div></div>
       <div class="card stat-tile"><div class="n" style="color:var(--good)">${o.acc}%</div><div class="l">точность</div></div>
-      <div class="card stat-tile"><div class="n">${S.streak.count}</div><div class="l">дней подряд</div></div>
-      <div class="card stat-tile"><div class="n">${S.exams.length}</div><div class="l">экзаменов (${examPass} сдано)</div></div>
+      <div class="card stat-tile"><div class="n">${S.streak.count}</div><div class="l">${plur(S.streak.count,["день подряд","дня подряд","дней подряд"])}</div></div>
+      <div class="card stat-tile"><div class="n">${S.exams.length}</div><div class="l">${plur(S.exams.length,["экзамен","экзамена","экзаменов"])} · сдано ${examPass}</div></div>
     </div>
 
     <div class="section-label">Освоение тем</div>

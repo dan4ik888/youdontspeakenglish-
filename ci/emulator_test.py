@@ -31,6 +31,13 @@ def adb(*a, timeout=120):
         return f"ADB-ERROR {e}"
 
 
+def launch():
+    """Запуск ровно как тап по иконке на рабочем столе (MAIN/LAUNCHER + флаги лаунчера):
+    если приложение уже открыто — Android просто возвращает его задачу на экран."""
+    return adb("shell", "am", "start", "-W", "-a", "android.intent.action.MAIN",
+               "-c", "android.intent.category.LAUNCHER", "-f", "0x10200000", "-n", ACT)
+
+
 def alive():
     return bool(adb("shell", "pidof", PKG).strip())
 
@@ -171,7 +178,7 @@ try:
     log("APK устанавливается", "Success" in out, out.strip()[-120:])
     adb("logcat", "-c")
     t_launch = time.time()
-    out = adb("shell", "am", "start", "-W", "-n", ACT)
+    out = launch()
     log("Приложение запускается", "Status: ok" in out, re.sub(r"\s+", " ", out.strip())[-160:])
 
     CD = CDP()
@@ -274,7 +281,7 @@ try:
     before = CD.ev("overall().answered")
     CD.close()
     adb("shell", "am", "force-stop", PKG); time.sleep(1.5)
-    adb("shell", "am", "start", "-W", "-n", ACT)
+    launch()
     CD = CDP(); CD.connect()
     for _ in range(60):
         if CD.ev("!!document.querySelector('.hero h2')") is True:
@@ -301,8 +308,7 @@ try:
     adb("shell", "am", "kill", PKG); time.sleep(2.5)                   # как это делает система в фоне
     was_killed = not alive()
     CD.close()
-    adb("shell", "am", "start", "-W", "-a", "android.intent.action.MAIN",
-        "-c", "android.intent.category.LAUNCHER", "-n", ACT)            # как тап по иконке
+    launch()            # как тап по иконке
     CD = CDP(); CD.connect()
     for _ in range(60):
         if CD.ev("!!(document.querySelector('.theory')||document.querySelector('.hero'))") is True:
@@ -331,8 +337,7 @@ try:
         bool(handlers) and PKG not in resumed, f"{resumed[:150]} | есть: {handlers}")
     in_bg_killed = not alive()
     CD.close()
-    adb("shell", "am", "start", "-W", "-a", "android.intent.action.MAIN",
-        "-c", "android.intent.category.LAUNCHER", "-n", ACT)
+    launch()
     CD = CDP(); CD.connect()
     for _ in range(60):
         if CD.ev("!!(document.querySelector('.theory')||document.querySelector('.hero'))") is True:
